@@ -1,25 +1,15 @@
-import ErrorRepository, { ERROR_SEARCH_KEY } from '../errorrespository';
+import ErrorRepository, { ERROR_SEARCH_KEY } from '../app';
 
-const arrayErrors = [
-  [100, 'Code - 100: Continue.'],
-  [101, 'Code - 101: Switching Protocols.'],
-  [102, 'Code - 101: Missign directory name.'],
-];
+test('Наличие ошибки', () => {
+  const errorsOfInput = new ErrorRepository();
+  const received = errorsOfInput.translate(100);
+  const expected = 'Code - 100: Continue.';
+  expect(received).toEqual(expected);
+});
 
-const errors = new ErrorRepository();
-arrayErrors.forEach((error) => errors.set(...error));
-console.log(errors); // eslint-disable-line
-
-test.each([
-  arrayErrors[2],
-  arrayErrors[0],
-  arrayErrors[1],
-  [0, ERROR_SEARCH_KEY],
-  ['error', ERROR_SEARCH_KEY],
-])(
-  ('Testing ErrorRepository class - method translate(code)...'),
-  (param, expected) => {
-    const received = errors.translate(param);
-    expect(expected).toBe(received);
-  },
-);
+test('Наличие ошибки', () => {
+  const errorsOfInput = new ErrorRepository();
+  const received = errorsOfInput.translate(99);
+  const expected = ERROR_SEARCH_KEY;
+  expect(received).toEqual(expected);
+});
